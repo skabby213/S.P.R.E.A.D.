@@ -1,0 +1,9 @@
+# Compiled C++ executable
+backend/spread_backend
+
+# Build directories
+build/
+backend/build/
+
+# Environment variables / secrets
+.env
