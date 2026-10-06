@@ -5,6 +5,13 @@ int main()
 {
     httplib::Server server;
 
+    server.Get("/health", [](const httplib::Request& req, httplib::Response& res) {
+    res.set_content(
+        R"({"status":"ok","service":"S.P.R.E.A.D. API"})",
+        "application/json"
+    );
+});
+
    server.Get(R"(/api/products/(\d+))", [](const httplib::Request& req, httplib::Response& res) {
 
     std::string product_id = req.matches[1];
