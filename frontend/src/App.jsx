@@ -5,8 +5,16 @@ function App() {
   const [lotId, setLotId] = useState('')
   const [lotData, setLotData] = useState(null)
   const searchLot = async () => {
+  const currentPath = window.location.pathname
+
+  const jupyterBase = currentPath.split('/proxy/4173')[0]
+
+  const apiBase = currentPath.includes('/proxy/4173')
+    ? `${jupyterBase}/proxy/8080`
+    : 'http://localhost:8080'
+
   const response = await fetch(
-    `/azuread/user/am2nk/codeserver/proxy/8080/api/lots/${lotId}`
+    `${apiBase}/api/lots/${encodeURIComponent(lotId)}`
   )
 
   const data = await response.json()
@@ -27,12 +35,23 @@ function App() {
         </p>
 
         <div>
-          <input
-          type="text"
-          placeholder="Enter Lot ID"
-          value={lotId}
-          onChange={(e) => setLotId(e.target.value)}
-        />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              searchLot()
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Enter Lot ID"
+              value={lotId}
+              onChange={(e) => setLotId(e.target.value)}
+            />
+
+            <button type="submit">
+              Search
+            </button>
+          </form>
           <button type="button" onClick={searchLot}>
             Search
           </button>
