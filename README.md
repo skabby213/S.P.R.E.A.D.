@@ -86,96 +86,78 @@ These tables are designed to represent relationships between food products, thei
 
 ## How to Run the Project
 
+### Requirements
+
+Before running S.P.R.E.A.D., make sure the following software is available:
+
+- Git
+- CMake (version 3.16 or newer)
+- A C++17-compatible compiler
+- Node.js and npm
+- A Linux environment, such as MTSU JupyterHub
+
+**Note:** The startup script has been tested in MTSU JupyterHub. Native Windows setup has not yet been tested.
+
 ### 1. Clone the Repository
 
-Clone the S.P.R.E.A.D. repository and navigate into the project directory.
+Open a terminal and run:
 
 ```bash
-git clone <repository-url>
-cd S.P.R.E.A.D.
+git clone https://github.com/skabby213/S.P.R.E.A.D.git
+cd S.P.R.E.A.D
 ```
 
-### 2. Build the C++ Backend
+### 2. Start S.P.R.E.A.D.
 
-From the project root, build the backend using CMake:
+Run the startup script:
 
 ```bash
-cmake --build backend/build
+./start.sh
 ```
 
-### 3. Start the C++ Backend
+The script automatically:
 
-Run the backend server:
+- Configures and builds the C++ backend.
+- Installs frontend dependencies if they are missing.
+- Builds the React frontend.
+- Starts the C++ API on port `8080`.
+- Starts the React frontend on port `4173`.
 
-```bash
-./backend/build/spread_backend
-```
+Keep the terminal running while using the application.
 
-The S.P.R.E.A.D. API will run on port `8080`.
+### 3. Open the Application
 
-The backend can be tested with:
+**In MTSU JupyterHub:**
 
-```bash
-curl http://127.0.0.1:8080/health
-```
+Open the **PORTS** tab in VS Code and select port `4173` to open S.P.R.E.A.D. in your browser.
 
-A successful response should return:
+**In a local Linux environment:**
 
-```json
-{
-  "status": "ok",
-  "service": "S.P.R.E.A.D. API"
-}
-```
+Open:
 
-The lot API can also be tested with:
+http://localhost:4173
 
-```bash
-curl http://127.0.0.1:8080/api/lots/1
-```
+### 4. Test the Application
 
-### 4. Install Frontend Dependencies
-
-Open a second terminal and navigate to the frontend directory:
-
-```bash
-cd frontend
-```
-
-Install the required packages:
-
-```bash
-npm install
-```
-
-### 5. Build the React Frontend
-
-Create the frontend production build:
-
-```bash
-npm run build
-```
-
-### 6. Start the Frontend
-
-Start the Vite preview server:
-
-```bash
-npx vite preview --host 0.0.0.0 --port 4173
-```
-
-The frontend runs on port `4173`.
-
-Keep both the frontend and backend running while using the application:
+1. Enter Lot ID `1`.
+2. Click **Search** or press **Enter**.
+3. Verify that the following information appears:
 
 ```text
-Frontend (React)     → Port 4173
-Backend (C++ API)    → Port 8080
+Lot ID: 1
+Lot Code: LOT-2026-001
+Status: active
 ```
 
-Enter a Lot ID, such as `1`, into the S.P.R.E.A.D. interface and select **Search**. The React frontend will send a request to the C++ API and display the returned lot information.
+### 5. Stop the Application
 
-> **Note:** The current API uses test data. Integration between the C++ backend and MySQL database is still under development.
+Return to the terminal running S.P.R.E.A.D. and press **Ctrl + C**.
+
+### Current Limitations
+
+The current API returns demonstration data. MySQL database integration is still under development.
+
+The startup script has been verified in the project's existing JupyterHub environment. A fresh installation and native Windows compatibility still require testing.
 
 ## Current System Flow
 
